@@ -13,30 +13,40 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.externals import joblib
 
+import csv
 # Pymongo Libraries for MongoDB
-import pymongo
-from pymongo import MongoClient
+#import pymongo
+#from pymongo import MongoClient
 
 # Database specification
-MONGO_URL = os.environ.get('MONGOHQ_URL')
-client = MongoClient(MONGO_URL)
+#MONGO_URL = os.environ.get('MONGOHQ_URL')
+#client = MongoClient(MONGO_URL)
 
 # Specify MongoDB Database and Collection
-db = client.jarvis
-collection = db.data
+#db = client.jarvis
+#collection = db.data
 
 # Initialize Flask
 app =Flask(__name__)
 
+data_log = 'datasets/data.csv'
 
 @app.route("/", methods=['GET'])
 def index():
-    tups = collection.find()
+    return render_template('index.html')
+
+
+@app.route("/dump",methods=['GET'])
+def dump():
+	#tups = collection.find()
+    csvfile = open(data_log, 'rb')
+    tups = csv.DictReader(csvfile)
     return render_template('index.html', tups=tups)
 
-
 @app.route("/insert", methods=['GET'])
-def post():																															
+def post():		
+    out_file = open(data_log,'a+')																													
+    '''
     tup = 	{
 	    		"light":request.args['light'],
 	    		"motion":request.args['motion'],
@@ -47,9 +57,19 @@ def post():
 	    		"bulb2":request.args['bulb2'],
 	    		"fan1":request.args['fan1']
     		}
+    '''
 
-    tup_id = collection.insert(tup)
-    return str(tup_id)
+    #tup_id = collection.insert(tup)
+    out_file.write('\n'+request.args['light'] + ','
+    			+ request.args['motion'] + ','
+	    		+ request.args['temprature'] + ','
+	    		+ request.args['humidity'] + ','
+	    		+ request.args['time'] + ','
+	    		+ request.args['bulb1'] + ','
+	    		+ request.args['bulb2'] + ','
+	    		+ request.args['fan1'])
+    out_file.close()
+    return '1'
 
 
 @app.route("/predict", methods=['GET'])
@@ -75,7 +95,7 @@ def predict():
 
 @app.route("/generate", methods=['GET'])
 def generate():
-	data = pd.read_csv('datasets/data.csv')
+	data = pd.read_csv(data_log)
 
 	# setting target value
 	_bulb1 = data['bulb1']

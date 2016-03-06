@@ -14,16 +14,16 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.externals import joblib
 
 # Pymongo Libraries for MongoDB
-import pymongo
-from pymongo import MongoClient
+#import pymongo
+#from pymongo import MongoClient
 
 # Database specification
-MONGO_URL = os.environ.get('MONGOHQ_URL')
-client = MongoClient(MONGO_URL)
+#MONGO_URL = os.environ.get('MONGOHQ_URL')
+#client = MongoClient(MONGO_URL)
 
 # Specify MongoDB Database and Collection
-db = client.jarvis
-collection = db.data
+#db = client.jarvis
+#collection = db.data
 
 # Initialize Flask
 app =Flask(__name__)
@@ -75,7 +75,7 @@ def predict():
 
 @app.route("/generate", methods=['GET'])
 def generate():
-	data = pd.read_csv('datasets/data.csv')
+	data = pd.read_csv(data_log)
 
 	# setting target value
 	_bulb1 = data['bulb1']
