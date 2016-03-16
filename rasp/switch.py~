@@ -1,0 +1,12 @@
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BOARD) 
+GPIO.setup(11,GPIO.OUT)
+
+while true:
+  status = input("Enter status:")
+  if status == 1:
+  	GPIO.output(11,GPIO.LOW)
+	print("Light on")
+  elif "0" in status:
+  	GPIO.output(11,GPIO.HIGH)
+	print("Light off")

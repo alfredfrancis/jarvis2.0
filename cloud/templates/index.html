@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Dataset</title>
+<head>
+   <title>Jarvis </title>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/css/bootstrap.css">
+   <link rel="stylesheet" href="static/css/index.css">
+  <script src="static/js/jquery.js"></script>
 </head>
 <body>
-    {% for tup in tups %}
-    {{ tup.light }},{{ tup.motion }},{{ tup.temprature }},{{ tup.humidity }},{{ tup.time }},{{ tup.bulb1 }},{{ tup.bulb2 }},{{ tup.fan1 }} <br>
-    {% endfor %}
+<div class="wrapper">
+          <form class="form-signin" method ="post" action="/login">
+            <h1 class="main-welcome">You reached Jarvis's,</h1>
+            <label for="username" class="sr-only">Email address</label>
+            <input type="username" name="username" class="form-control" placeholder="User Name" required autofocus>
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+            
+            {% if error %}
+               <div class="alert alert-danger" role="alert">
+                {{ error }}
+              </div>
+            {% endif %}
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Connect</button>
+          </form>
+</div> <!-- /container -->
 </body>
 </html>

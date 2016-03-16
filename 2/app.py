@@ -5,8 +5,7 @@ import warnings
 warnings.simplefilter('ignore', DeprecationWarning)
 
 # Flask
-from functools import wraps
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect
 
 import pandas as pd
 
@@ -18,48 +17,14 @@ import csv
 
 # Initialize Flask
 app =Flask(__name__)
-app.secret_key = 'F12Zr47j\3yX R~X@H!jmM]Lwf/,?KT'
+
 data_log = 'datasets/data.csv'
 
-
-#*************************************Login & Sessions*************************************
 @app.route("/", methods=['GET'])
 def index():
     return render_template('index.html')
 
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get('user') is None:
-            return redirect(url_for('login'))
-        return f(*args, **kwargs)
-    return decorated_function
 
-# route for handling the login page logic
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-	error = None
-	if request.method == 'POST':
-		if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-			error = 'Invalid Credentials. Please try again.'
-		else:
-			session['user'] = 'admin'
-			return redirect(url_for('home'))		
-	return render_template('index.html', error = error)
-
-@app.route('/home', methods=['GET'])
-def home():
-	if session.get('user') == 'admin':
-		return render_template('home.html')
-	return redirect(url_for('login'))		
-
-@app.route('/logout', methods=['GET'])
-def logout():
-	session['user'] = None
-	session.clear()	
-	return redirect(url_for('login'))	
-
-#*************************************Machine learning**************************************
 @app.route("/dump",methods=['GET'])
 def dump():
     csvfile = open(data_log, 'rb')

@@ -3,10 +3,8 @@ import smbus
 import time
  
 # Define some constants from the datasheet
- 
 DEVICE     = 0x23 # Default device I2C address
- 
-POWER_DOWN = 0x00 # No active state
+ POWER_DOWN = 0x00 # No active state
 POWER_ON   = 0x01 # Power on
 RESET      = 0x07 # Reset data register value
  
@@ -41,7 +39,7 @@ def readLight(addr=DEVICE):
 def main():
  
   while True:
-    print str(round((readLight()/150)*100))
+    print str((readLight()/150)*100)
     time.sleep(0.5)
    
 if __name__=="__main__":

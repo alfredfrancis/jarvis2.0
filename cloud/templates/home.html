@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Jarvis</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/css/bootstrap.css">
+  <link rel="stylesheet" href="static/css/home.css">
+  <script src="static/js/jquery.js"></script>
+  <script type="text/javascript" src="static/js/script.js"></script>
+</head>
+<body>
+<div class="bs-header">
+      <div class="container">
+        <h2>JARVIS 2</h2>
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
+    <div class="container">
+<div class="row">
+  <div class="col-sm-4">
+	<ul class="list-group">
+		<li class="list-group-item active">
+		<h3 class="list-group-item-heading">Connected Devices</h3>
+		</li>
+	  	<li class="list-group-item">
+	  		<div class="settings row">
+            <div class="question">
+              Table lamp
+            </div>
+            <div class="switch">
+              <form id="switchboard" method="post" action="#">
+              <input id="cmn-toggle-1" name="l1" class="cmn-toggle cmn-toggle-round" value="1" type="checkbox">
+              <label for="cmn-toggle-1"></label>
+            </div>
+          </div><!-- /row -->
+	  </li>
+	  <li class="list-group-item">
+	  	<div class="settings row">
+            <div class="question">
+               Room light
+            </div>
+            <div class="switch">
+              <form id="switchboard" method="post" action="#">
+              <input id="cmn-toggle-2" name="l2" class="cmn-toggle cmn-toggle-round" value="1" type="checkbox">
+              <label for="cmn-toggle-2"></label>
+            </div>
+          </div><!-- /row -->
+	  </li> 
+	  <li class="list-group-item">
+	  	<div class="settings row">
+            <div class="question">
+               Fan
+            </div>
+            <div class="switch">
+              <form id="switchboard" method="post" action="#">
+              <input id="cmn-toggle-3" name="f1" class="cmn-toggle cmn-toggle-round" value="1" type="checkbox">
+              <label for="cmn-toggle-3"></label>
+            </div>
+          </div><!-- /row -->
+
+	  </li> 
+	  	  <li class="list-group-item">
+	  	<div class="settings row">
+            <div class="question">
+               All Devices
+            </div>
+            <div class="switch">
+              <form id="switchboard" method="post" action="#">
+              <input id="cmn-toggle-4" name="all" class="cmn-toggle cmn-toggle-round" value="1" type="checkbox">
+              <label for="cmn-toggle-4"></label>
+            </div>
+          </div><!-- /row -->
+
+	  </li> 
+	</ul>
+  </div>
+  <div class="col-sm-4">
+  	<ul class="list-group">
+    		<li class="list-group-item active">
+    		  <h3 class="list-group-item-heading">Temprature</h3>
+    		</li>
+    		<li class="list-group-item">
+      		<div id="temp">
+      		</div>
+    		</li>
+		</ul>
+		  <ul class="list-group">
+    		<li class="list-group-item active">
+    		  <h3 class="list-group-item-heading">Humidity</h3>
+    		</li>
+    		<li class="list-group-item">
+      		<div id="humidity">
+      		</div>
+    		</li>
+		</ul>
+      <ul class="list-group">
+        <li class="list-group-item active">
+          <h3 class="list-group-item-heading">Light Avilability</h3>
+        </li>
+        <li class="list-group-item">
+          <div id="light">
+          </div>
+        </li>
+    </ul>    
+  </div>
+    <div class="col-sm-4">
+  	  	<ul class="list-group">
+      		<li class="list-group-item active">
+      		  <h3 class="list-group-item-heading">AI status</h3>
+		      </li>
+		    </ul>
+  </div>
+</div>
+</div>
+</body>
+</html>
