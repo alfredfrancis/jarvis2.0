@@ -18,14 +18,21 @@ html,body{
 .list-group-item-heading{
   text-align: center;
 }
-#temp{
+#t,#h,#m,#l{
   text-align: center;
-  font-size: 5em;
+  font-size: 3.5em;
 }
-#weather{
-  text-align: center;
-  font-size: 4em;
+
+#t:after {
+    content: ' °C';
 }
+#h:after {
+    content: ' %';
+}
+#l:after {
+    content: ' %';
+}
+
 @media only screen and (max-width: 480px) {
       .bs-header {
         text-align: center;
@@ -33,13 +40,12 @@ html,body{
     .bs-header h1 {
         font-size: 75px;
     }
-#temp{
+#t,#h,#m,#l,#c{
   text-align: center;
-  font-size: 3em;
+  font-size: 2em;
 }
-#weather{
-  text-align: center;
-  font-size: 3em;
+#t:after {
+    content: ' °C';
 }
 }
 .settings {
@@ -137,4 +143,16 @@ input.cmn-toggle-round:checked + label:before {
 }
 input.cmn-toggle-round:checked + label:after {
   margin-left: 60px;
+}
+
+input.round {
+  border-color:#D3D3D3;
+-webkit-border-radius: 50px;
+-moz-border-radius: 50px;
+border-radius: 50px;
+height:50px;
+font-size:20px;
+width: 100px;
+text-align:center;
+margin-left: 10px;
 }

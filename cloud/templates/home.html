@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="static/css/bootstrap.css">
   <link rel="stylesheet" href="static/css/home.css">
   <script src="static/js/jquery.js"></script>
-  <script type="text/javascript" src="static/js/script.js"></script>
+  <script src="static/js/script.js"></script>
 </head>
 <body>
 <div class="bs-header">
@@ -30,7 +30,7 @@
             </div>
             <div class="switch">
               <form id="switchboard" method="post" action="#">
-              <input id="cmn-toggle-1" name="l1" class="cmn-toggle cmn-toggle-round" value="1" type="checkbox">
+              <input id="cmn-toggle-1" name="b2" class="cmn-toggle cmn-toggle-round" value="1" type="checkbox">
               <label for="cmn-toggle-1"></label>
             </div>
           </div><!-- /row -->
@@ -42,7 +42,7 @@
             </div>
             <div class="switch">
               <form id="switchboard" method="post" action="#">
-              <input id="cmn-toggle-2" name="l2" class="cmn-toggle cmn-toggle-round" value="1" type="checkbox">
+              <input id="cmn-toggle-2" name="b1" class="cmn-toggle cmn-toggle-round" value="1" type="checkbox">
               <label for="cmn-toggle-2"></label>
             </div>
           </div><!-- /row -->
@@ -75,43 +75,110 @@
 	  </li> 
 	</ul>
   </div>
-  <div class="col-sm-4">
-  	<ul class="list-group">
-    		<li class="list-group-item active">
-    		  <h3 class="list-group-item-heading">Temprature</h3>
-    		</li>
-    		<li class="list-group-item">
-      		<div id="temp">
-      		</div>
-    		</li>
-		</ul>
-		  <ul class="list-group">
-    		<li class="list-group-item active">
-    		  <h3 class="list-group-item-heading">Humidity</h3>
-    		</li>
-    		<li class="list-group-item">
-      		<div id="humidity">
-      		</div>
-    		</li>
-		</ul>
-      <ul class="list-group">
+  <div class="col-sm-8">
+  <div class="row">
+      <div class="col-sm-3">       
+          <ul class="list-group">
+              <li class="list-group-item active">
+                <h3 class="list-group-item-heading">Temprature</h3>
+              </li>
+              <li class="list-group-item">
+                <div id="t">
+                </div>
+              </li>
+          </ul>
+      </div>
+      <div class="col-sm-3">
+        <ul class="list-group">
         <li class="list-group-item active">
-          <h3 class="list-group-item-heading">Light Avilability</h3>
+          <h3 class="list-group-item-heading">Humidity</h3>
         </li>
         <li class="list-group-item">
-          <div id="light">
+          <div id="h">
           </div>
         </li>
-    </ul>    
+    </ul> 
+      </div>
+              <div class="col-sm-3">
+          <ul class="list-group">
+                <li class="list-group-item active">
+                  <h3 class="list-group-item-heading">Light </h3>
+                </li>
+                <li class="list-group-item">
+                  <div id="l">
+                  </div>
+              </li>
+          </ul> 
+      </div>
+      <div class="col-sm-3">
+        <ul class="list-group">
+                <li class="list-group-item active">
+                  <h3 class="list-group-item-heading">Motion </h3>
+                </li>
+                <li class="list-group-item">
+                  <div id="m">
+                  </div>
+                </li>
+        </ul>  
+      </div>
   </div>
-    <div class="col-sm-4">
-  	  	<ul class="list-group">
-      		<li class="list-group-item active">
-      		  <h3 class="list-group-item-heading">AI status</h3>
-		      </li>
-		    </ul>
+  <div class="row">
+        <div class="col-sm-12">
+          <ul class="list-group">
+            <li class="list-group-item active">
+                  <h3 class="list-group-item-heading">AI control</h3>
+                </li>
+            <li class="list-group-item">
+             <div class="row">
+              <input type="text" name="t_in" class="round" placeholder="Temp">
+              <input type="text" name="h_in" class="round" placeholder="Humidity">
+              <input type="text" name="l_in" class="round" placeholder="Light">
+              <input type="text" name="c_in" class="round" placeholder="Time">
+              <input type="text" name="m_in" class="round" placeholder="Motion">
+              </div>
+              <div class="row">
+
+                 <div class="settings col-sm-1">
+                    <div class="question">
+                      Simulation Mode
+                    </div>
+                    <div class="switch">
+                      <form id="switchboard" method="post" action="#">
+                      <input id="cmn-toggle-6" name="simulate" class="cmn-toggle cmn-toggle-round" value="1" type="checkbox">
+                      <label for="cmn-toggle-6"></label>
+                    </div>
+                    </div>
+
+                <div class="settings col-sm-1">
+                    <div class="question">
+                      AI
+                    </div>
+                    <div class="switch">
+                      <form id="switchboard" method="post" action="#">
+                      <input id="cmn-toggle-5" name="ai" class="cmn-toggle cmn-toggle-round" value="1" type="checkbox">
+                      <label for="cmn-toggle-5"></label>
+                    </div>
+                    </div>
+
+                   <div class="settings col-sm-1">
+                    <div class="question">
+                      Insert
+                    </div>
+                    <div class="switch">
+                      <form id="switchboard" method="post" action="#">
+                      <input id="cmn-toggle-7" name="insert" class="cmn-toggle cmn-toggle-round" value="1" type="checkbox">
+                      <label for="cmn-toggle-7"></label>
+                    </div>
+                    </div>
+                    
+                  </div><!-- /row -->
+              </li>
+          </ul>
+          </div>
+      </div>
   </div>
 </div>
 </div>
 </body>
 </html>
+

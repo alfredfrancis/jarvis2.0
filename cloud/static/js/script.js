@@ -1,53 +1,61 @@
 $(document).ready(function(){
 
-  $.getJSON('switch.json', { get_param: 'value' },function(data){update_values(data);} );
+  function refreshFunc() {
+     $.getJSON('/instance',function(data){update_values(data);} );
+  }
+
+  timeint = setInterval(refreshFunc, 3000);
 
   function update_values(data){
     $.each(data, function(index, element) {
+    if (index=='b1' || index=='b2' || index=='f1' || index=='ai' )
+    {
       if(element==1)
       {
         $("input[name='"+ index +"']").prop('checked', true);
-      }
+      } 
+      else{
+        $("input[name='"+ index +"']").prop('checked', false);        
+      }     
+    }else{
+      $("#"+index).html(element);
+    }
     });
   }
 
-  $( this ).load( "weather.php", function( response) {
-    var array = response.split(',');
-     $('#temp').html(array[0]+"°C");
-     $('#weather').html(array[1]);
-});
 
 $("input[type='checkbox']").change(function()
 {
   $val=$(this).is(":checked") ? 1 : 0;
   if(this.name=="all" && $val )
   {
-    $("input[name='l1']").prop('checked', true);
-    $("input[name='l2']").prop('checked', true);
+    $("input[name='b1']").prop('checked', true);
+    $("input[name='b2']").prop('checked', true);
     $("input[name='f1']").prop('checked', true);
     all("1");
   }
   else if(this.name=="all" && !($val) )
   {
-    $("input[name='l1']").prop('checked', false);
-    $("input[name='l2']").prop('checked', false);
+    $("input[name='b1']").prop('checked', false);
+    $("input[name='b2']").prop('checked', false);
     $("input[name='f1']").prop('checked', false);
     all("0");
   }
 });
+
 function all(status)
 {
-    $.post("switch.php",
+    $.get("/req",
       {
-        bname: 'l1',
+        bname: 'b1',
         bstatus: status
       });
-      $.post("switch.php",
+      $.get("/req",
       {
-        bname: 'l2',
+        bname: 'b2',
         bstatus: status
       });
-      $.post("switch.php",
+      $.get("/req",
       {
         bname: 'f1',
         bstatus: status
@@ -56,10 +64,10 @@ function all(status)
 
 $("input[type='checkbox']").change(function()
 {
-  if(this.name!="all")
+  if(this.name != "all" && this.name !="simulate" && this.name !="insert" )
   {
       $val=$(this).is(":checked") ? 1 : 0;
-       $.post("switch.php",
+       $.get("/req",
       {
         bname: this.name,
         bstatus: $val
@@ -68,6 +76,51 @@ $("input[type='checkbox']").change(function()
 
 });
 
+$("input[name='simulate']").change(function()
+{
+    if($(this).is(":checked") ? 1 : 0)
+    {
+      $.get("/req_rasp",
+      {
+        l: $("input[name='l_in']").val(),
+        m: $("input[name='m_in']").val(),
+        t: $("input[name='t_in']").val(),
+        c: $("input[name='c_in']").val(),
+        h: $("input[name='h_in']").val()
+      }).done(function(){
+        alert('Initialising Simulation..');
+        $.get("/predict").done(function() 
+        {
+          alert('Simulation complete!');
+          $("input[name='simulate']").prop('checked', false);
+        });
+      });
 
+
+    }   
+});
+
+$("input[name='insert']").change(function()
+{
+    if($(this).is(":checked") ? 1 : 0)
+    {
+      $.get("/req_rasp",
+      {
+        l: $("input[name='l_in']").val(),
+        m: $("input[name='m_in']").val(),
+        t: $("input[name='t_in']").val(),
+        c: $("input[name='c_in']").val(),
+        h: $("input[name='h_in']").val()
+      }).done(function(){
+      alert('Processing data!');
+      $.get("/insert").done(function() 
+        {
+          alert('Insertion complete!');
+          $("input[name='insert']").prop('checked', false);
+        });
+    });
+
+    }   
+});
 
 });

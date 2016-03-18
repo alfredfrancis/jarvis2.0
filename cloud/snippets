@@ -1,0 +1,15 @@
+	# Bulding Features list
+	'''
+	if request.args['device'] == 'b1' or request.args['device'] == 'b2' :
+		features_input = [
+	    		float(request.args['l']),
+	    		float(request.args['c']),
+	    		float(request.args['m'])
+    		]
+	elif request.args['device'] == 'f1' :
+		features_input = [
+	    		float(request.args['t']),
+	    		float(request.args['h']),
+	    		float(request.args['m'])
+    		]
+    '''

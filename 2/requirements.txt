@@ -1,6 +1,0 @@
-Flask
-pymongo
-numpy==1.9.1
-scipy==0.14.0
-pandas
-scikit-learn==0.17
