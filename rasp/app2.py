@@ -7,9 +7,6 @@ import urllib2
 import threading
 import datetime
 import json
-import serial
-import thread
-
 GPIO.setwarnings(False)
 
 DEVICE     = 0x23
@@ -45,10 +42,9 @@ GPIO.setup(relay_pin1,GPIO.OUT)
 GPIO.setup(relay_pin2,GPIO.OUT)
 GPIO.setup(relay_pin3,GPIO.OUT)
 GPIO.setup(motion_pin, GPIO.IN)
-global m2
-global presence
-presence = 0
-m2=GPIO.input(motion_pin)
+
+presence = GPIO.input(motion_pin)
+
 def readDHT22():
     # Get a new reading
     dht22.trigger()
@@ -66,33 +62,26 @@ def readLight(addr=DEVICE):
 
 ##################################### Motion detection 
 
-def update_presence():
-	global presence
-	while True:
-		with serial.Serial('/dev/ttyUSB0') as ser:
-			line = ser.readline()
-			if "1" in line:
-				presence = 1
-			else:
-				presence = 0
-thread.start_new_thread( update_presence, ( ) )
-
 def MOTION(PIR_PIN):
 	print "Event triggered : motion"
-	global m2
-	m2 = 1
-
+	print "Performing Prediction"
+	global presence
+	presence = 1
+	try: 
+		response = urllib2.urlopen("http://10.42.0.1:5000/predict")
+	except:
+		print "error"
+	print "Prediction complete"
 
 def check_presence():
-  print("checking motion")
-  global m2
+  print("checking presence")
+  global presence
   threading.Timer(300, check_presence).start()
-  m2 = 0
+  presence = 0
 
 threading.Timer(300, check_presence).start()
 
 GPIO.add_event_detect(motion_pin, GPIO.RISING, callback=MOTION)
-
 
 ##################################### Motion detection end
 
@@ -102,49 +91,31 @@ def update_db():
   global presence
   r_time = str(datetime.datetime.now().hour)+"."+str(datetime.datetime.now().minute)
   print("-----------------")
-  print "presence:" + str(presence)
+  print "Acitivity:" + str(presence)
   print "Light:" + light
   print("Humidity: " + humidity + "%")
   print("Temperature: " + temperature + "C")
   print("time: " + r_time)
-  print("motion: " + str(m2))
   print("-----------------")
   try: 
-  	urllib2.urlopen("http://jarvis-cloud.herokuapp.com/req_rasp?l="
-  		+str(light)+"&t="+str(temperature)+"&h="+str(humidity)+"&m="+str(presence)+"&c="+str(r_time)+"&m2="+str(m2))
+  	urllib2.urlopen("http://10.42.0.1:5000/req_rasp?l="
+  		+str(light)+"&t="+str(temperature)+"&h="+str(humidity)+"&m="+str(presence)+"&c="+str(r_time))
   except :
 		"error" 
   threading.Timer(5.0, update_db).start()
 
 update_db()
 
-def update_devices():
-  response = urllib2.urlopen("http://jarvis-cloud.herokuapp.com/instance")
-  status = response.read()
-  devices = json.loads(status)
-  GPIO.output(23, not bool(int(devices['b1'])))
-  GPIO.output(24, not bool(int(devices['b2'])))
-  GPIO.output(25, not bool(int(devices['f1'])))
-  threading.Timer(2.0, update_devices).start()
-
-update_devices()
-
 def insert_db():
   print("inserting")
   try: 
-    urllib2.urlopen("http://jarvis-cloud.herokuapp.com/insert")
+    urllib2.urlopen("http://10.42.0.1:5000/insert")
   except :
     "error" 
   threading.Timer(300.0, update_db).start()
-threading.Timer(300.0, update_db).start()
-def bg_prediction():
-  print("inserting")
-  try: 
-    urllib2.urlopen("http://jarvis-cloud.herokuapp.com/predict")
-  except :
-    "error" 
-  threading.Timer(4.0, bg_prediction).start()  
-bg_prediction()
+
+insert_db()
+
 while 1:
   sleep(sleepTime)
 

@@ -1,12 +1,16 @@
 import RPi.GPIO as GPIO
+from time import sleep
 GPIO.setmode(GPIO.BOARD) 
-GPIO.setup(11,GPIO.OUT)
-
+GPIO.setup(23,GPIO.OUT)
+GPIO.setup(24,GPIO.OUT)
+GPIO.setup(25,GPIO.OUT)
 while True:
-  status = input("Enter status:")
-  if status == 1:
-  	GPIO.output(11,GPIO.LOW)
-	print("Light on")
-  elif status == 0:
-  	GPIO.output(11,GPIO.HIGH)
-	print("Light off")
+	GPIO.output(23,GPIO.LOW)
+	GPIO.output(23,GPIO.HIGH)
+	GPIO.output(24,GPIO.LOW)
+	sleep(1)
+	GPIO.output(24,GPIO.HIGH)
+	GPIO.output(25,GPIO.LOW)	
+	sleep(1)
+	GPIO.output(25,GPIO.HIGH)
+	GPIO.output(23,GPIO.LOW)

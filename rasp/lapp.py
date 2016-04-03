@@ -86,10 +86,11 @@ def MOTION(PIR_PIN):
 def check_presence():
   print("checking motion")
   global m2
-  threading.Timer(300, check_presence).start()
   m2 = 0
+  threading.Timer(300.0, check_presence).start()
+  
 
-threading.Timer(300, check_presence).start()
+threading.Timer(300.0, check_presence).start()
 
 GPIO.add_event_detect(motion_pin, GPIO.RISING, callback=MOTION)
 
@@ -110,7 +111,7 @@ def update_db():
   print("motion: " + str(m2))
   print("-----------------")
   try: 
-  	urllib2.urlopen("http://jarvis-cloud.herokuapp.com/req_rasp?l="
+  	urllib2.urlopen("http://10.42.0.1:5000/req_rasp?l="
   		+str(light)+"&t="+str(temperature)+"&h="+str(humidity)+"&m="+str(presence)+"&c="+str(r_time)+"&m2="+str(m2))
   except :
 		"error" 
@@ -119,7 +120,7 @@ def update_db():
 update_db()
 
 def update_devices():
-  response = urllib2.urlopen("http://jarvis-cloud.herokuapp.com/instance")
+  response = urllib2.urlopen("http://10.42.0.1:5000/instance")
   status = response.read()
   devices = json.loads(status)
   GPIO.output(23, not bool(int(devices['b1'])))
@@ -132,19 +133,20 @@ update_devices()
 def insert_db():
   print("inserting")
   try: 
-    urllib2.urlopen("http://jarvis-cloud.herokuapp.com/insert")
+    urllib2.urlopen("http://10.42.0.1:5000/insert")
   except :
     "error" 
   threading.Timer(300.0, update_db).start()
-threading.Timer(300.0, update_db).start()
+threading.Timer(300.0, update_db).start() 
 def bg_prediction():
   print("inserting")
   try: 
-    urllib2.urlopen("http://jarvis-cloud.herokuapp.com/predict")
+    urllib2.urlopen("http://10.42.0.1:5000/predict")
   except :
     "error" 
   threading.Timer(4.0, bg_prediction).start()  
 bg_prediction()
+
 while 1:
   sleep(sleepTime)
 

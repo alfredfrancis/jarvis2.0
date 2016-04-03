@@ -84,6 +84,7 @@ $("input[name='simulate']").change(function()
       {
         l: $("input[name='l_in']").val(),
         m: $("input[name='m_in']").val(),
+        m2: $("input[name='m2_in']").val(),
         t: $("input[name='t_in']").val(),
         c: $("input[name='c_in']").val(),
         h: $("input[name='h_in']").val()
@@ -108,6 +109,7 @@ $("input[name='insert']").change(function()
       {
         l: $("input[name='l_in']").val(),
         m: $("input[name='m_in']").val(),
+        m2: $("input[name='m2_in']").val(),
         t: $("input[name='t_in']").val(),
         c: $("input[name='c_in']").val(),
         h: $("input[name='h_in']").val()

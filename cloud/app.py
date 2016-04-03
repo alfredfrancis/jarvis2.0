@@ -92,6 +92,7 @@ def req_rasp():
     python_obj['m'] = request.args['m']
     python_obj['l'] = request.args['l']
     python_obj['c'] = request.args['c']
+    python_obj['m2'] = request.args['m2']
     data= json.dumps(python_obj, ensure_ascii=False)	
     write_db(data)
     return "1"	
@@ -112,7 +113,7 @@ def dump():
 @app.route("/reset",methods=['GET'])
 def reset():
     json_db = open(json_file, 'w+')
-    json_db.write('{"f1": "0", "c": "0", "ai": "0", "h": "0", "m": "0", "l": "0", "t": "0", "b2": "0", "b1": "0"}')
+    json_db.write('{"f1": "0", "c": "0", "ai": "0", "h": "0", "m": "0","m2":"", "l": "0", "t": "0", "b2": "0", "b1": "0"}')
     json_db.close()
     return "1"
 
@@ -122,6 +123,7 @@ def insert():
     out_file = open(data_log,'a+')																													
     out_file.write('\n'+str(python_obj['l']) + ','
     			+ str(python_obj['m']) + ','
+                + str(python_obj['m2']) + ','
 	    		+ str(python_obj['t']) + ','
 	    		+ str(python_obj['h']) + ','
 	    		+ str(python_obj['c']) + ','
@@ -140,7 +142,8 @@ def predict():
     features_input = [
         float(python_obj['l']),
         float(python_obj['c']),
-        float(python_obj['m'])
+        float(python_obj['m']),
+        float(python_obj['m2'])
     ]
 
   	#	Prediction using Model
@@ -171,7 +174,7 @@ def generate():
 	target = _bulb1.values
 
 	# setting features for prediction
-	numerical_features = data[['l', 'c', 'm']]
+	numerical_features = data[['l', 'c', 'm','m2']]
 
 	# converting into numpy arrays
 	features_array = numerical_features.values
@@ -186,7 +189,7 @@ def generate():
 	# Generate Model for Bulb2
 	_bulb2 = data['b2']
 	target = _bulb2.values
-	numerical_features = data[['l', 'c', 'm']]
+	numerical_features = data[['l', 'c', 'm','m2']]
 	features_array = numerical_features.values
 
 	logreg = LogisticRegression(C=1)
